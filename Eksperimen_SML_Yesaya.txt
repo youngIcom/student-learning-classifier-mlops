@@ -1,3 +1,1 @@
-LINK_REPOSITORY_PUBLIC_Eksperimen_SML_Yesaya
-
-https://github.com/youngIcom/Eksperimen_MSL_Yesaya/tree/main/Eksperimen_SML_Yesaya
+github : https://github.com/youngIcom/Eksperimen_SML_Yesaya.git

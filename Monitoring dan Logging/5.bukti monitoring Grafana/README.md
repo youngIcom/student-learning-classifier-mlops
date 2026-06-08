@@ -2,6 +2,13 @@
 
 Dashboard Grafana wajib memuat username Dicoding `yesaya` pada nama dashboard.
 
+Screenshot yang sudah disiapkan untuk level Basic:
+
+- `0.monitoring_grafana_dashboard.png`
+- `1.monitoring_api_up.png`
+- `2.monitoring_cpu_usage.png`
+- `3.monitoring_memory_usage.png`
+
 Untuk target Advanced, sertakan minimal 10 panel/metrik berbeda. Query yang disarankan:
 
 - `student_classifier_api_up`

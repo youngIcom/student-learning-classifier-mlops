@@ -1,3 +1,2 @@
-ISI_DENGAN_LINK_REPOSITORY_PUBLIC_Workflow-CI
-https://github.com/youngIcom/Eksperimen_MSL_Yesaya/tree/main/Workflow_CI_Yesaya
-Docker Hub: ISI_DENGAN_LINK_DOCKER_HUB_IMAGE_PUBLIC
+github : https://github.com/youngIcom/Workflow_CI_Yesaya.git
+Docker Hub : https://hub.docker.com/r/youngicom/student-learning-classifier

@@ -1,15 +1,21 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
 EXPERIMENT_ROOT = Path(__file__).resolve().parents[1]
-RAW_DIR = PROJECT_ROOT / "dataset" / "open+university+learning+analytics+dataset"
+RAW_DATASET_DIRNAME = "open+university+learning+analytics+dataset"
+DEFAULT_RAW_DIR = EXPERIMENT_ROOT / "dataset" / RAW_DATASET_DIRNAME
+LEGACY_RAW_DIR = EXPERIMENT_ROOT.parent / "dataset" / RAW_DATASET_DIRNAME
+_raw_dir_env = os.getenv("OULAD_RAW_DIR")
+RAW_DIR = Path(_raw_dir_env) if _raw_dir_env else DEFAULT_RAW_DIR
+if not RAW_DIR.exists() and LEGACY_RAW_DIR.exists():
+    RAW_DIR = LEGACY_RAW_DIR
 OUTPUT_DIR = EXPERIMENT_ROOT / "open_UL_analysis_preprocessing"
 OUTPUT_FILE = OUTPUT_DIR / "student_cleaned.csv"
 METADATA_FILE = OUTPUT_DIR / "preprocessing_metadata.json"
@@ -68,10 +74,8 @@ def _aggregate_assessments() -> pd.DataFrame:
             score_weight_sum=("score_weight", "sum"),
         )
     )
-    grouped["assessment_weighted_score"] = np.where(
-        grouped["score_weight_sum"] > 0,
-        grouped["weighted_score_sum"] / grouped["score_weight_sum"],
-        np.nan,
+    grouped["assessment_weighted_score"] = (
+        grouped["weighted_score_sum"] / grouped["score_weight_sum"].replace(0, np.nan)
     )
     return grouped.drop(columns=["weighted_score_sum", "score_weight_sum"])
 
@@ -134,11 +138,9 @@ def _aggregate_vle(chunksize: int = 500_000) -> pd.DataFrame:
 
     result = summary_all.merge(active_days, on=KEY_COLS, how="left")
     result["vle_active_days"] = result["vle_active_days"].fillna(0)
-    result["vle_avg_clicks_per_active_day"] = np.where(
-        result["vle_active_days"] > 0,
-        result["vle_total_clicks"] / result["vle_active_days"],
-        0,
-    )
+    result["vle_avg_clicks_per_active_day"] = (
+        result["vle_total_clicks"] / result["vle_active_days"].replace(0, np.nan)
+    ).fillna(0)
     return result
 
 
