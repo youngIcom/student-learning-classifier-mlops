@@ -20,6 +20,9 @@ API_UP = Gauge("student_classifier_api_up", "Whether inference API health endpoi
 MODEL_ARTIFACT_READY = Gauge("student_classifier_model_artifact_ready", "Whether model artifacts are present")
 SYSTEM_UPTIME_SECONDS = Gauge("student_classifier_system_uptime_seconds", "System uptime in seconds")
 SYSTEM_BOOT_TIME_SECONDS = Gauge("student_classifier_system_boot_time_seconds", "System boot time as Unix timestamp")
+LOAD_AVERAGE_1M = Gauge("student_classifier_load_average_1m", "System load average over 1 minute")
+AVAILABLE_MEMORY_BYTES = Gauge("student_classifier_available_memory_bytes", "Available system memory in bytes")
+DISK_FREE_BYTES = Gauge("student_classifier_disk_free_bytes", "Free disk space in bytes")
 
 
 def model_artifacts_ready() -> bool:
@@ -30,7 +33,15 @@ def model_artifacts_ready() -> bool:
 def collect() -> None:
     CPU_USAGE.set(psutil.cpu_percent(interval=None))
     MEMORY_USAGE.set(psutil.virtual_memory().percent)
-    DISK_USAGE.set(psutil.disk_usage("/").percent)
+    disk_usage = psutil.disk_usage("/")
+    virtual_memory = psutil.virtual_memory()
+    DISK_USAGE.set(disk_usage.percent)
+    AVAILABLE_MEMORY_BYTES.set(virtual_memory.available)
+    DISK_FREE_BYTES.set(disk_usage.free)
+    try:
+        LOAD_AVERAGE_1M.set(os.getloadavg()[0])
+    except (AttributeError, OSError):
+        LOAD_AVERAGE_1M.set(0)
     MODEL_ARTIFACT_READY.set(1 if model_artifacts_ready() else 0)
     boot_time = psutil.boot_time()
     SYSTEM_BOOT_TIME_SECONDS.set(boot_time)
