@@ -1,0 +1,54 @@
+# Local raw datasets. OULAD contains studentVle.csv > 100 MB, so keep it out of Git.
+dataset/
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Conda and local environment files
+.env
+.env.*
+!.env.example
+
+# MLflow and model outputs
+mlruns/
+mlartifacts/
+Workflow_CI_Yesaya/artifacts/*
+!Workflow_CI_Yesaya/artifacts/README.md
+*.keras
+*.h5
+*.joblib
+*.pkl
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+.DS_Store
+
+# Keep generated evidence folders, but do not commit screenshots until final review.
+Workflow_CI_Yesaya/bukti_serving/*
+!Workflow_CI_Yesaya/bukti_serving/README.md
+Workflow_CI_Yesaya/bukti_monitoring/*
+!Workflow_CI_Yesaya/bukti_monitoring/README.md
+Workflow_CI_Yesaya/bukti_alerting/*
+!Workflow_CI_Yesaya/bukti_alerting/README.md
+Workflow_CI_Yesaya/screenshots_mlflow/*
+!Workflow_CI_Yesaya/screenshots_mlflow/README.md
+
+KETENTUAN_PENGERJAAN_SUBMISSION_MSML.md
+KETENTUAN_PENGERJAAN_SUBMISSION_MSML.pdf
+PRD_System.md
+dataset/
+venv/
+__pycache__/
+mlruns/
+mlartifacts/
+

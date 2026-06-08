@@ -1,0 +1,9 @@
+DagsHub MLflow Tracking URL
+
+https://dagshub.com/youngIcom/Eksperimen_MSL_Yesaya.mlflow
+
+Experiment URL:
+https://dagshub.com/youngIcom/Eksperimen_MSL_Yesaya.mlflow/#/experiments/0
+
+Catatan:
+Token dan credential DagsHub tidak disimpan di repository. Gunakan GitHub Secrets atau environment variable lokal untuk autentikasi.
